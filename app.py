@@ -28,14 +28,18 @@ app.secret_key = os.environ["SECRET_KEY"]
 # ==================================================
 
 def get_db_connection():
+    database_url = os.environ.get("DATABASE_URL")
 
-    conn = psycopg2.connect(
-        host="localhost",
-        database="course_registration",
-        user="postgres",
-        password=os.environ["DB_PASSWORD"], 
-        port="5432"
-    )
+    if database_url:
+        conn = psycopg2.connect(database_url)
+    else:
+        conn = psycopg2.connect(
+            host="localhost",
+            database="course_registration",
+            user="postgres",
+            password=os.environ["DB_PASSWORD"],
+            port="5432"
+        )
 
     return conn
 
