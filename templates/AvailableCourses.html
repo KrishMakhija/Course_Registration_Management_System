@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Available Courses</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/AvailableCourses.css') }}">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="sidebar-header">
+            <h2>Student Panel</h2>
+        </div>
+
+        <div class="sidebar-menu">
+
+            <p class="menu-heading">MAIN MENU</p>
+
+            <a href="{{ url_for('StudentDashboard') }}">
+                <span class="sidebar-icon">🏠</span>
+                <span class="link-text">Dashboard</span>
+            </a>
+
+            <a href="{{ url_for('AvailableCourses') }}" class="active">
+                <span class="sidebar-icon">📚</span>
+                <span class="link-text">Available Courses</span>
+            </a>
+
+        </div>
+
+        <div class="sidebar-menu">
+
+            <p class="menu-heading">ACCOUNT</p>
+
+            <a href="{{ url_for('StudentProfile') }}">
+                <span class="sidebar-icon">👤</span>
+                <span class="link-text">My Profile</span>
+            </a>
+
+            <a href="{{ url_for('StudentSettings') }}">
+                <span class="sidebar-icon">⚙️</span>
+                <span class="link-text">Settings</span>
+            </a>
+
+            <a href="{{ url_for('logout') }}" class="logout">
+                <span class="sidebar-icon">🚪</span>
+                <span class="link-text">Logout</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Header -->
+        <header class="top-header">
+
+            <div>
+                <h1>Available Courses</h1>
+                <p>Explore and register for your courses.</p>
+            </div>
+
+            <div class="student-info">
+                <div class="profile-icon">👤</div>
+
+                <span>
+                    {{ session.get('student_name', 'Student') }}
+                </span>
+            </div>
+
+        </header>
+
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% for category, message in messages %}
+
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endwith %}
+
+
+        <!-- Search Section -->
+        <section class="search-container">
+
+            <div class="search-heading">
+                <h2>Find Your Course</h2>
+
+                <p>
+                    Search courses by their name or course code.
+                </p>
+            </div>
+
+            <form method="GET"
+                  action="{{ url_for('AvailableCourses') }}"
+                  class="search-form">
+
+                <input type="text"
+                       name="search"
+                       placeholder="Search by course name or code..."
+                       value="{{ search_query }}">
+
+                <button type="submit" class="search-btn">
+                    🔍 Search
+                </button>
+
+                <a href="{{ url_for('AvailableCourses') }}"
+                   class="clear-btn">
+                    Clear
+                </a>
+
+            </form>
+
+        </section>
+
+
+        <!-- Courses Section -->
+        <section class="courses-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>Explore Courses</h2>
+                    <p>Choose the courses you want to enroll in.</p>
+                </div>
+
+            </div>
+
+
+            <div class="course-container">
+
+                {% for course in courses %}
+
+                <div class="course-card">
+
+                    <div class="course-card-header">
+
+                        <div class="course-icon">📖</div>
+
+                        <span class="credits-badge">
+                            {{ course[4] }} Credits
+                        </span>
+
+                    </div>
+
+
+                    <h3>{{ course[1] }}</h3>
+
+
+                    <p class="course-code">
+                        {{ course[2] }}
+                    </p>
+
+
+                    <p class="course-description">
+                        {{ course[3] or 'No description available.' }}
+                    </p>
+
+
+                    <div class="course-card-footer">
+
+                        {% if course[5] %}
+
+                            <button class="enrolled-btn" disabled>
+                                ✓ Already Enrolled
+                            </button>
+
+                        {% else %}
+
+                            <form method="POST"
+                                  action="{{ url_for('EnrollCourse', course_id=course[0]) }}">
+
+                                <button type="submit" class="enroll-btn">
+                                    Enroll Now →
+                                </button>
+
+                            </form>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+                {% else %}
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">📚</div>
+
+                    <h3>No Courses Found</h3>
+
+                    <p>
+                        We couldn't find any courses matching your search.
+                        Try searching with another course name or code.
+                    </p>
+
+                    <a href="{{ url_for('AvailableCourses') }}"
+                       class="primary-btn">
+                        View All Courses
+                    </a>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+
+        <!-- Footer -->
+        <footer class="footer">
+
+            <p>
+                © 2026 Course Registration Management System.
+                All Rights Reserved.
+            </p>
+
+        </footer>
+
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/StudentProfile.css') }}">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="sidebar-header">
+            <h2>Student Panel</h2>
+        </div>
+
+        <div class="sidebar-menu">
+
+            <p class="menu-heading">MAIN MENU</p>
+
+            <a href="{{ url_for('StudentDashboard') }}">
+                <span class="sidebar-icon">🏠</span>
+                <span class="link-text">Dashboard</span>
+            </a>
+
+            <a href="{{ url_for('AvailableCourses') }}">
+                <span class="sidebar-icon">📚</span>
+                <span class="link-text">Available Courses</span>
+            </a>
+
+        </div>
+
+        <div class="sidebar-menu">
+
+            <p class="menu-heading">ACCOUNT</p>
+
+            <a href="{{ url_for('StudentProfile') }}" class="active">
+                <span class="sidebar-icon">👤</span>
+                <span class="link-text">My Profile</span>
+            </a>
+
+            <a href="{{ url_for('StudentSettings') }}">
+                <span class="sidebar-icon">⚙️</span>
+                <span class="link-text">Settings</span>
+            </a>
+
+            <a href="{{ url_for('logout') }}" class="logout">
+                <span class="sidebar-icon">🚪</span>
+                <span class="link-text">Logout</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Header -->
+        <header class="top-header">
+
+            <div>
+                <h1>My Profile</h1>
+                <p>View and manage your personal information.</p>
+            </div>
+
+            <div class="student-info">
+                <div class="profile-icon">👤</div>
+                <span>{{ session.get('student_name', 'Student') }}</span>
+            </div>
+
+        </header>
+
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% for category, message in messages %}
+
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endwith %}
+
+
+        <!-- Profile Card -->
+        <section class="profile-container">
+
+            <div class="profile-heading">
+
+                <div class="large-profile-icon">👤</div>
+
+                <div>
+                    <h2>{{ student[1] }}</h2>
+                    <p>Student ID: {{ student[0] }}</p>
+                </div>
+
+            </div>
+
+
+            <!-- Profile Form -->
+            <form method="POST"
+                  action="{{ url_for('UpdateStudentProfile') }}">
+
+                <h3 class="form-heading">Personal Information</h3>
+
+                <div class="form-grid">
+
+                    <!-- Student ID -->
+                    <div class="form-group">
+
+                        <label>Student ID</label>
+
+                        <input type="text"
+                               value="{{ student[0] }}"
+                               readonly>
+
+                    </div>
+
+
+                    <!-- Full Name -->
+                    <div class="form-group">
+
+                        <label>Full Name</label>
+
+                        <input type="text"
+                               name="name"
+                               value="{{ student[1] }}"
+                               required>
+
+                    </div>
+
+
+                    <!-- Email -->
+                    <div class="form-group">
+
+                        <label>Email Address</label>
+
+                        <input type="email"
+                               name="email"
+                               value="{{ student[4] }}"
+                               required>
+
+                    </div>
+
+
+                    <!-- Mobile -->
+                    <div class="form-group">
+
+                        <label>Mobile Number</label>
+
+                        <input type="tel"
+                               name="mobile"
+                               value="{{ student[2] }}"
+                               required>
+
+                    </div>
+
+
+                    <!-- DOB -->
+                    <div class="form-group">
+
+                        <label>Date of Birth</label>
+
+                        <input type="date"
+                               name="dob"
+                               value="{{ student[3] }}"
+                               required>
+
+                    </div>
+
+
+                    <!-- Gender -->
+                    <div class="form-group">
+
+                        <label>Gender</label>
+
+                        <select name="gender" required>
+
+                            <option value="">Select Gender</option>
+
+                            <option value="Male"
+                                {% if student[8] == 'Male' %}selected{% endif %}>
+                                Male
+                            </option>
+
+                            <option value="Female"
+                                {% if student[8] == 'Female' %}selected{% endif %}>
+                                Female
+                            </option>
+
+                            <option value="Other"
+                                {% if student[8] == 'Other' %}selected{% endif %}>
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Year -->
+                    <div class="form-group">
+
+                        <label>Academic Year</label>
+
+                        <select name="year" required>
+
+                            <option value="">Select Year</option>
+
+                            {% for i in range(1, 5) %}
+
+                                <option value="{{ i }}"
+                                    {% if student[5] == i %}selected{% endif %}>
+                                    {{ i }}{{ 'st' if i == 1 else 'nd' if i == 2 else 'rd' if i == 3 else 'th' }} Year
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Branch -->
+                    <div class="form-group">
+
+                        <label>Branch</label>
+
+                        <input type="text"
+                               name="branch"
+                               value="{{ student[6] }}"
+                               required>
+
+                    </div>
+
+
+                    <!-- Address -->
+                    <div class="form-group full-width">
+
+                        <label>Address</label>
+
+                        <textarea name="address"
+                                  rows="4"
+                                  required>{{ student[7] }}</textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Account Information -->
+                <div class="account-info">
+
+                    <h3>Account Information</h3>
+
+                    <p>
+                        <strong>Account Created:</strong>
+
+                        {{ student[9].strftime('%d %B %Y') if student[9] else 'N/A' }}
+                    </p>
+
+                </div>
+
+
+                <!-- Buttons -->
+                <div class="form-buttons">
+
+                    <a href="{{ url_for('StudentDashboard') }}"
+                       class="cancel-btn">
+                        Cancel
+                    </a>
+
+                    <button type="submit" class="save-btn">
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- Footer -->
+        <footer class="footer">
+
+            <p>
+                © 2026 Course Registration Management System.
+                All Rights Reserved.
+            </p>
+
+        </footer>
+
+    </main>
+
+</body>
+</html>

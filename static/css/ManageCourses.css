@@ -1,0 +1,75 @@
+/* Smooth Scrolling */
+
+html {
+  scroll-behavior: smooth;
+}
+
+#add-course,
+#available-courses {
+  scroll-margin-top: 25px;
+}
+
+/* Page Heading */
+
+.page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+/* Courses Box */
+
+.courses-box {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  margin-top: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+/* Add Course Button */
+
+.add-course-btn {
+  background: #485563;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 7px;
+  text-decoration: none;
+  border: none;
+  transition: 0.3s;
+}
+
+.add-course-btn:hover {
+  background: #29323c;
+  color: white;
+}
+
+/* Form Focus */
+
+.form-control:focus {
+  border-color: #485563;
+  box-shadow: 0 0 0 0.2rem rgba(72, 85, 99, 0.15);
+}
+
+/* Table */
+
+.table thead th {
+  color: #29323c;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.table td {
+  color: #6b7280;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .page-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px;
+  }
+}

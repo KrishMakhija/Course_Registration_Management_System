@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/StudentDashboard.css') }}">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="sidebar-header">
+            <h2>Student Panel</h2>
+        </div>
+
+        <!-- Main Menu -->
+        <div class="sidebar-menu">
+
+            <p class="menu-heading">MAIN MENU</p>
+
+            <a href="{{ url_for('StudentDashboard') }}" class="active">
+                <span class="sidebar-icon">🏠</span>
+                <span class="link-text">Dashboard</span>
+            </a>
+
+            <a href="{{ url_for('AvailableCourses') }}">
+                <span class="sidebar-icon">📚</span>
+                <span class="link-text">Available Courses</span>
+            </a>
+
+        </div>
+
+        <!-- Account Menu -->
+        <div class="sidebar-menu">
+
+            <p class="menu-heading">ACCOUNT</p>
+
+            <a href="{{ url_for('StudentProfile') }}">
+                <span class="sidebar-icon">👤</span>
+                <span class="link-text">My Profile</span>
+            </a>
+
+            <a href="{{ url_for('StudentSettings') }}">
+                <span class="sidebar-icon">⚙️</span>
+                <span class="link-text">Settings</span>
+            </a>
+
+            <a href="{{ url_for('logout') }}" class="logout">
+                <span class="sidebar-icon">🚪</span>
+                <span class="link-text">Logout</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Top Header -->
+        <header class="top-header">
+
+            <div>
+                <h1>Dashboard</h1>
+                <p>Welcome to your Student Dashboard</p>
+            </div>
+
+            <div class="student-info">
+                <div class="profile-icon">👤</div>
+
+                <span>
+                    {{ session.get('student_name', 'Student') }}
+                </span>
+            </div>
+
+        </header>
+
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% for category, message in messages %}
+
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endwith %}
+
+
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+
+            <div>
+                <h2>
+                    Welcome Back,
+                    {{ session.get('student_name', 'Student') }}!
+                </h2>
+
+                <p>
+                    Manage your courses and track your academic progress.
+                </p>
+            </div>
+
+            <a href="{{ url_for('AvailableCourses') }}" class="primary-btn">
+                Browse Courses
+            </a>
+
+        </section>
+
+
+        <!-- Statistics -->
+        <section class="stats-container">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">📚</div>
+
+                <div>
+                    <h3>{{ total_courses }}</h3>
+                    <p>Available Courses</p>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">📝</div>
+
+                <div>
+                    <h3>{{ enrolled_courses }}</h3>
+                    <p>Enrolled Courses</p>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">🎓</div>
+
+                <div>
+                    <h3>{{ total_credits }}</h3>
+                    <p>Total Credits</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Quick Actions -->
+        <section class="section-container">
+
+            <div class="section-heading">
+                <h2>Quick Actions</h2>
+            </div>
+
+            <div class="quick-actions">
+
+                <a href="{{ url_for('AvailableCourses') }}"
+                   class="action-card">
+
+                    <span class="action-icon">📖</span>
+
+                    <div>
+                        <h3>Browse Courses</h3>
+                        <p>Explore and register for new courses.</p>
+                    </div>
+
+                </a>
+
+
+                <a href="#my-courses" class="action-card">
+
+                    <span class="action-icon">📋</span>
+
+                    <div>
+                        <h3>View My Courses</h3>
+                        <p>Check your currently enrolled courses.</p>
+                    </div>
+
+                </a>
+
+
+                <a href="{{ url_for('StudentProfile') }}"
+                   class="action-card">
+
+                    <span class="action-icon">👤</span>
+
+                    <div>
+                        <h3>My Profile</h3>
+                        <p>View and update your personal details.</p>
+                    </div>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- My Courses -->
+        <section class="section-container" id="my-courses">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>My Courses</h2>
+                    <p>Courses in which you are currently enrolled.</p>
+                </div>
+
+                <a href="{{ url_for('AvailableCourses') }}"
+                   class="secondary-btn">
+                    Explore More
+                </a>
+
+            </div>
+
+
+            {% if my_courses %}
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Course Name</th>
+                            <th>Course Code</th>
+                            <th>Credits</th>
+                            <th>Registration Date</th>
+                            <th>Action</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for course in my_courses %}
+
+                        <tr>
+
+                            <td>{{ course[0] }}</td>
+
+                            <td>
+                                <span class="course-code">
+                                    {{ course[1] }}
+                                </span>
+                            </td>
+
+                            <td>{{ course[2] }}</td>
+
+                            <td>
+                                {{ course[3].strftime('%d %b %Y') if course[3] else '-' }}
+                            </td>
+
+                            <td>
+
+                                <form method="POST"
+                                      action="{{ url_for('DropCourse', registration_id=course[4]) }}"
+                                      onsubmit="return confirm('Are you sure you want to drop this course?');">
+
+                                    <button type="submit" class="drop-btn">
+                                        Drop Course
+                                    </button>
+
+                                </form>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            {% else %}
+
+            <div class="empty-state">
+
+                <div class="empty-icon">📚</div>
+
+                <h3>No Courses Enrolled Yet</h3>
+
+                <p>
+                    You haven't registered for any courses.
+                    Explore available courses and start learning.
+                </p>
+
+                <a href="{{ url_for('AvailableCourses') }}"
+                   class="primary-btn">
+                    Browse Courses
+                </a>
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- Footer -->
+        <footer class="footer">
+
+            <p>
+                © 2026 Course Registration Management System.
+                All Rights Reserved.
+            </p>
+
+        </footer>
+
+    </main>
+
+</body>
+</html>

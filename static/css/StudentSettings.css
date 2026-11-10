@@ -1,0 +1,573 @@
+/* =========================
+   GLOBAL STYLING
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #F1F3F5;
+    color: #29323C;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+    width: 260px;
+    height: 100vh;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    background: linear-gradient(135deg, #485563, #29323C);
+
+    padding: 25px 15px;
+
+    color: white;
+
+    overflow-y: auto;
+
+    z-index: 1000;
+
+    transition: width 0.3s ease;
+}
+
+.sidebar-header {
+    text-align: center;
+    padding: 10px 0 35px;
+}
+
+.sidebar-header h2 {
+    font-size: 23px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.sidebar-menu {
+    margin-bottom: 30px;
+}
+
+.menu-heading {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: #C3CBD3;
+
+    margin: 10px 12px 15px;
+
+    font-weight: bold;
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 13px 15px;
+    margin-bottom: 8px;
+
+    text-decoration: none;
+
+    color: #E5E9ED;
+
+    font-size: 14px;
+
+    border-radius: 7px;
+
+    transition: 0.3s;
+
+    white-space: nowrap;
+}
+
+.sidebar-menu a:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+.sidebar-menu a.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.sidebar-icon {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 25px;
+
+    font-size: 19px;
+}
+
+.sidebar-menu a.logout {
+    margin-top: 15px;
+}
+
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.main-content {
+    margin-left: 260px;
+
+    width: calc(100% - 260px);
+
+    padding: 30px;
+
+    min-height: 100vh;
+
+    transition: margin-left 0.3s ease,
+                width 0.3s ease;
+}
+
+
+/* =========================
+   TOP HEADER
+========================= */
+
+.top-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 30px;
+}
+
+.top-header h1 {
+    font-size: 27px;
+    margin-bottom: 6px;
+}
+
+.top-header p {
+    color: #777;
+    font-size: 14px;
+}
+
+.student-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    font-weight: 600;
+}
+
+.profile-icon {
+    width: 40px;
+    height: 40px;
+
+    background: #485563;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    font-size: 20px;
+}
+
+
+/* =========================
+   FLASH MESSAGES
+========================= */
+
+.alert {
+    padding: 13px 18px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.alert-success {
+    background: #D1E7DD;
+    color: #0F5132;
+}
+
+.alert-danger {
+    background: #F8D7DA;
+    color: #842029;
+}
+
+.alert-warning {
+    background: #FFF3CD;
+    color: #664D03;
+}
+
+
+/* =========================
+   SETTINGS CONTAINER
+========================= */
+
+.settings-container {
+    background: white;
+
+    max-width: 850px;
+
+    padding: 30px;
+
+    border-radius: 12px;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+}
+
+
+/* =========================
+   SETTINGS HEADING
+========================= */
+
+.settings-heading {
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+
+    padding-bottom: 25px;
+
+    margin-bottom: 30px;
+
+    border-bottom: 1px solid #E5E9ED;
+}
+
+.settings-icon {
+    width: 60px;
+    height: 60px;
+
+    background: #E9EDF1;
+
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 27px;
+}
+
+.settings-heading h2 {
+    font-size: 21px;
+    margin-bottom: 8px;
+}
+
+.settings-heading p {
+    color: #777;
+    font-size: 13px;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #485563;
+
+    margin-bottom: 10px;
+}
+
+.password-field {
+    display: flex;
+
+    align-items: center;
+
+    border: 1px solid #D9DEE3;
+
+    border-radius: 6px;
+
+    overflow: hidden;
+
+    transition: 0.3s;
+}
+
+.password-field:focus-within {
+    border-color: #485563;
+
+    box-shadow: 0 0 0 3px rgba(72, 85, 99, 0.1);
+}
+
+.password-field input {
+    width: 100%;
+
+    padding: 13px 15px;
+
+    border: none;
+
+    outline: none;
+
+    font-size: 14px;
+}
+
+.toggle-password {
+    background: transparent;
+
+    border: none;
+
+    padding: 12px 15px;
+
+    color: #485563;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.toggle-password:hover {
+    color: #29323C;
+}
+
+.form-group small {
+    display: block;
+
+    color: #888;
+
+    font-size: 12px;
+
+    margin-top: 8px;
+}
+
+
+/* =========================
+   FORM BUTTONS
+========================= */
+
+.form-buttons {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    margin-top: 30px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #E5E9ED;
+}
+
+.cancel-btn,
+.save-btn {
+    padding: 12px 22px;
+
+    border-radius: 6px;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    text-decoration: none;
+
+    transition: 0.3s;
+}
+
+.cancel-btn {
+    background: white;
+
+    border: 1px solid #485563;
+
+    color: #485563;
+}
+
+.cancel-btn:hover {
+    background: #E9EDF1;
+}
+
+.save-btn {
+    background: #485563;
+
+    border: none;
+
+    color: white;
+}
+
+.save-btn:hover {
+    background: #29323C;
+}
+
+
+/* =========================
+   SECURITY INFO
+========================= */
+
+.security-info {
+    max-width: 850px;
+
+    background: #E9EDF1;
+
+    padding: 25px;
+
+    margin-top: 25px;
+
+    border-radius: 10px;
+}
+
+.security-info h3 {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.security-info ul {
+    padding-left: 22px;
+}
+
+.security-info li {
+    color: #59636D;
+
+    font-size: 13px;
+
+    line-height: 2;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+    text-align: center;
+
+    padding: 25px 10px;
+
+    color: #888;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   RESPONSIVE SIDEBAR
+========================= */
+
+@media (max-width: 768px) {
+
+    .sidebar {
+        width: 75px;
+        padding: 20px 10px;
+    }
+
+    .sidebar-header h2 {
+        font-size: 0;
+    }
+
+    .sidebar-header h2::first-letter {
+        font-size: 23px;
+    }
+
+    .menu-heading {
+        display: none;
+    }
+
+    .sidebar-menu a {
+        justify-content: center;
+
+        padding: 14px 5px;
+
+        gap: 0;
+
+        font-size: 0;
+    }
+
+    .sidebar-icon {
+        font-size: 20px;
+        min-width: 25px;
+    }
+
+    .link-text {
+        display: none;
+    }
+
+    .main-content {
+        margin-left: 75px;
+
+        width: calc(100% - 75px);
+
+        padding: 20px;
+    }
+
+}
+
+
+/* =========================
+   SMALL MOBILE SCREENS
+========================= */
+
+@media (max-width: 480px) {
+
+    .main-content {
+        padding: 15px;
+    }
+
+    .top-header {
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .top-header h1 {
+        font-size: 21px;
+    }
+
+    .student-info {
+        font-size: 12px;
+    }
+
+    .profile-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 16px;
+    }
+
+    .settings-container {
+        padding: 20px;
+    }
+
+    .settings-heading {
+        gap: 12px;
+    }
+
+    .settings-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 22px;
+    }
+
+    .settings-heading h2 {
+        font-size: 18px;
+    }
+
+    .settings-heading p {
+        line-height: 1.5;
+    }
+
+    .form-buttons {
+        flex-direction: column-reverse;
+    }
+
+    .cancel-btn,
+    .save-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+}

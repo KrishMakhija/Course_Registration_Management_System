@@ -1,0 +1,67 @@
+body {
+  background: #f1f3f5;
+}
+
+.page-heading h3 {
+  color: #29323c;
+  font-weight: 700;
+}
+
+.registration-card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+.table th {
+  background: #f8f9fa;
+  color: #485563;
+  font-size: 13px;
+  padding: 15px;
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 15px;
+  vertical-align: middle;
+  font-size: 14px;
+}
+
+.registration-id {
+  background: #e9ecef;
+  color: #485563;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.course-badge {
+  background: #e9ecef;
+  color: #29323c;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.student-name {
+  font-weight: 600;
+  color: #29323c;
+}
+
+.student-email {
+  color: #8a929b;
+  font-size: 12px;
+}
+
+.total-badge {
+  background: #485563;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 7px;
+  font-size: 13px;
+}
+
+.table-responsive {
+  border-radius: 8px;
+}

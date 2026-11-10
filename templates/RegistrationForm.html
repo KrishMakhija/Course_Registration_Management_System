@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/css/registration.css">
+    <title>Student Registration</title>
+  </head>
+
+  <body>
+    <form method="post" action="/subreg">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+      {% endwith %}
+      <fieldset>
+        <legend>
+          <h1>Registration Form</h1>
+        </legend>
+
+        <div class="form-group">
+          <h4>Enter Your Name:</h4>
+          <input type="text" name="name" placeholder="Full Name" required />
+        </div>
+
+        <div class="form-group">
+          <h4>Enter Your Date Of Birth:</h4>
+          <input type="date" name="dob" required />
+        </div>
+
+        <div class="form-group">
+          <h4>Enter Your Phone Number:</h4>
+          <input type="tel" name="phone" placeholder="Phone" required />
+        </div>
+
+        <div class="form-group">
+          <h4>Enter Your Email:</h4>
+          <input type="email" name="email" placeholder="Email" required />
+        </div>
+
+        <div class="form-group">
+          <h4>Select Your Year:</h4>
+
+          <select name="year" required>
+            <option value="1">1st Year</option>
+            <option value="2">2nd Year</option>
+            <option value="3">3rd Year</option>
+            <option value="4">4th Year</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <h4>Enter Your Branch:</h4>
+          <input type="text" name="branch" placeholder="Branch" required />
+        </div>
+
+        <div class="form-group">
+          <h4>Enter Your Address:</h4>
+          <input type="text" name="address" placeholder="Address" required />
+        </div>
+
+        <div class="form-group">
+          <h4>Select Your Gender:</h4>
+
+          <select name="gender" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <h4>Enter Your Password:</h4>
+          <input type="password" name="password" placeholder="Password" required />
+        </div>
+
+      </fieldset>
+
+      <div class="submit-container">
+        <input type="submit" value="Register" />
+      </div>
+    </form>
+  </body>
+</html>

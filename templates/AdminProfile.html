@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Admin Profile</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/AdminDashboard.css') }}"
+    />
+
+    <link rel="stylesheet" href="/static/css/AdminProfile.css" />
+  </head>
+
+  <body>
+    <div class="sidebar">
+      <div class="sidebar-menu">
+        <p class="menu-title">MAIN MENU</p>
+
+        <a href="{{ url_for('AdminDashboard') }}">
+          <i class="bi bi-speedometer2"></i>
+          Dashboard
+        </a>
+
+        <a href="{{ url_for('ManageCourses') }}">
+          <i class="bi bi-book"></i>
+          Manage Courses
+        </a>
+
+        <a href="{{ url_for('ManageStudents') }}">
+          <i class="bi bi-people"></i>
+          Manage Students
+        </a>
+
+        <a href="{{ url_for('ManageRegistrations') }}">
+          <i class="bi bi-journal-check"></i>
+          Registrations
+        </a>
+
+        <p class="menu-title">ACCOUNT</p>
+
+        <a href="{{ url_for('AdminProfile') }}" class="active">
+          <i class="bi bi-person-circle"></i>
+          Profile
+        </a>
+
+        <a href="{{ url_for('AdminSettings') }}">
+          <i class="bi bi-gear"></i>
+          Settings
+        </a>
+      </div>
+
+      <a href="{{ url_for('logout') }}" class="logout">
+        <i class="bi bi-box-arrow-right"></i>
+        Logout
+      </a>
+    </div>
+
+    <div class="main-content">
+      <div class="topbar d-flex justify-content-between align-items-center">
+        <h4>My Profile</h4>
+
+        <div>
+          <i class="bi bi-person-circle me-2"></i>
+          {{ session.get('admin_name', 'Administrator') }}
+        </div>
+      </div>
+
+      <div class="profile-container">
+        {% with messages = get_flashed_messages(with_categories=true) %} {% for
+        category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show">
+          {{ message }}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+          ></button>
+        </div>
+        {% endfor %} {% endwith %}
+
+        <!-- Profile Header -->
+
+        <div class="profile-header">
+          <div class="profile-avatar">
+            <i class="bi bi-person-fill"></i>
+          </div>
+
+          <div>
+            <h3>{{ admin[1] }}</h3>
+            <p>{{ admin[3] }}</p>
+            <span class="badge bg-secondary mt-2">Administrator</span>
+          </div>
+        </div>
+
+        <!-- Profile Information -->
+
+        <div class="profile-card">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h5 class="mb-0">
+              <i class="bi bi-person-lines-fill me-2"></i>
+              Personal Information
+            </h5>
+          </div>
+
+          <form method="POST" action="{{ url_for('UpdateAdminProfile') }}">
+            <div class="row">
+              <!-- Admin ID (Read Only) -->
+              <div class="col-md-6">
+                <div class="info-box">
+                  <label class="info-label">Admin ID</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    value="{{ admin[0] }}"
+                    readonly
+                  />
+                </div>
+              </div>
+
+              <!-- Full Name -->
+              <div class="col-md-6">
+                <div class="info-box">
+                  <label class="info-label">Full Name</label>
+                  <input
+                    type="text"
+                    name="full_name"
+                    class="form-control"
+                    value="{{ admin[1] }}"
+                    required
+                  />
+                </div>
+              </div>
+
+              <!-- Username -->
+              <div class="col-md-6">
+                <div class="info-box">
+                  <label class="info-label">Username</label>
+                  <input
+                    type="text"
+                    name="username"
+                    class="form-control"
+                    value="{{ admin[2] }}"
+                    required
+                  />
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div class="col-md-6">
+                <div class="info-box">
+                  <label class="info-label">Email Address</label>
+                  <input
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    value="{{ admin[3] }}"
+                    required
+                  />
+                </div>
+              </div>
+
+              <!-- Account Created -->
+              <div class="col-md-6">
+                <div class="info-box">
+                  <label class="info-label">Account Created On</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    value="{{ admin[4].strftime('%d %B %Y') if admin[4] else 'Not Available' }}"
+                    readonly
+                  />
+                </div>
+              </div>
+            </div>
+
+            <hr class="my-3" />
+
+            <div class="d-flex justify-content-end gap-2">
+              <a
+                href="{{ url_for('AdminDashboard') }}"
+                class="btn btn-outline-secondary"
+              >
+                Cancel
+              </a>
+
+              <button type="submit" class="btn btn-dark">
+                <i class="bi bi-save me-1"></i>
+                Save Changes
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
