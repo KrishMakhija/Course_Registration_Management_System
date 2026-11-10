@@ -190,3 +190,17 @@ GitHub: https://github.com/KrishMakhija
 ---
 
 *Developed as a project using Python Flask and PostgreSQL.*
+
+## Screenshots
+
+### Login Page
+![Login Page](screenshots/login.png)
+
+### Student Dashboard
+![Student Dashboard](screenshots/student_dashboard.png)
+
+### Available Courses
+![Available Courses](screenshots/available_courses.png)
+
+### Admin Dashboard
+![Admin Dashboard](screenshots/admin_dashboard.png)
