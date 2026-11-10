@@ -45,9 +45,10 @@ A web-based Course Registration Management System developed using Python Flask a
 Course_Registration_Management_System/
 │
 ├── app.py
+├── database.sql
 ├── requirements.txt
-├── .gitignore
 ├── README.md
+├── .gitignore
 │
 ├── templates/
 │   ├── Login.html
@@ -103,60 +104,36 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 5. Configure PostgreSQL
+### 5. Configure PostgreSQL Database
 
-- Install PostgreSQL.
+- Install PostgreSQL on your system.
+- Open pgAdmin or your preferred PostgreSQL client.
 - Create a database named `course_registration`.
-- Open the database in pgAdmin or your preferred SQL client.
-- Execute the following SQL commands to create the required tables.
 
-```sql
-CREATE TABLE students (
-    student_id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    mobile VARCHAR(15) NOT NULL,
-    dob DATE NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    year INT NOT NULL CHECK (year BETWEEN 1 AND 4),
-    branch VARCHAR(100) NOT NULL,
-    address TEXT NOT NULL,
-    gender VARCHAR(20) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+### 6. Create Database Tables
 
-CREATE TABLE admins (
-    admin_id SERIAL PRIMARY KEY,
-    full_name VARCHAR(100) NOT NULL,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+The project includes a `database.sql` file containing the complete database schema.
 
-CREATE TABLE courses (
-    course_id SERIAL PRIMARY KEY,
-    course_name VARCHAR(100) NOT NULL,
-    course_code VARCHAR(20) UNIQUE NOT NULL,
-    description TEXT,
-    credits INT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+To create the tables:
 
-CREATE TABLE registrations (
-    registration_id SERIAL PRIMARY KEY,
-    student_id INT NOT NULL REFERENCES students(student_id) ON DELETE CASCADE,
-    course_id INT NOT NULL REFERENCES courses(course_id) ON DELETE CASCADE,
-    registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE(student_id, course_id)
-);
-```
+1. Open pgAdmin.
+2. Select the `course_registration` database.
+3. Open the Query Tool.
+4. Open or copy the contents of `database.sql`.
+5. Execute the SQL queries.
 
-### 6. Configure Environment Variables
+The following four tables will be created:
+
+- `students`
+- `admins`
+- `courses`
+- `registrations`
+
+### 7. Configure Environment Variables
 
 Create a `.env` file in the root project directory.
 
-Add your own credentials:
+Add your own PostgreSQL credentials:
 
 ```env
 DB_PASSWORD=your_postgresql_password
@@ -165,7 +142,13 @@ SECRET_KEY=your_random_secret_key
 
 **Important:** Never upload your `.env` file or database credentials to GitHub.
 
-### 7. Run the Application
+### 8. Create Initial Admin Account
+
+Before using the Admin Login, create an initial admin account in the `admins` table.
+
+Generate a secure password hash using Werkzeug's `generate_password_hash()` and insert the admin details into the database.
+
+### 9. Run the Application
 
 ```bash
 python app.py
@@ -177,18 +160,18 @@ Open your browser and visit:
 http://127.0.0.1:5000/
 ```
 
-## Database
+## Database Structure
 
 The application uses four main tables:
 
-- **students:** Stores student information and login credentials.
-- **admins:** Stores administrator information and login credentials.
-- **courses:** Stores available course details.
-- **registrations:** Maintains student-course enrollment records.
+| Table | Description |
+|---|---|
+| students | Stores student information and login credentials. |
+| admins | Stores administrator information and login credentials. |
+| courses | Stores available course details. |
+| registrations | Maintains student-course enrollment records. |
 
 Passwords are stored as secure hashes rather than plain text.
-
-**Initial Admin Setup:** A first admin account must be created in the database before using the Admin Login. Use Werkzeug's `generate_password_hash()` to generate the password hash before inserting the account.
 
 ## Future Enhancements
 
